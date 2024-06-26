@@ -82,6 +82,7 @@ function setup_gem5() {
     # get gem5
     git clone $gem5_repo $work_dir/gem5
     # build gem5
+    cd $work_dir/gem5
     python3 `which scons` build/RISCV/gem5.opt -j100 --ignore-style || { echo "Gem5 installation failed"; exit 1; }
     echo "Gem5 installed successfully"
 }
