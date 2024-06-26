@@ -10,6 +10,7 @@ disk_dev=/dev/sda4
 work_dir=/tip
 chipyard_repo=https://github.com/ucb-bar/chipyard.git
 boom_repo=https://github.com/songmuhan/tip.git
+gem5_repo=https://github.com/gem5/gem5
 conda=$work_dir/miniforge3/bin/conda
 benchmarks=/tip/chipyard/.conda-env/riscv-tools/riscv64-unknown-elf/share/riscv-tests/benchmarks/
 
@@ -77,9 +78,17 @@ function test_all_env() {
     make -j CONFIG=MediumBoomConfig run-binary BINARY=$benchmarks/qsort.riscv LOADMEM=1 
 }
 
+function setup_gem5() {
+    # get gem5
+    git clone $gem5_repo $work_dir/gem5
+    # build gem5
+    # python3 `which scons` build/RISCV/gem5.opt -j || { echo "Gem5 installation failed"; exit 1; }
+    echo "Gem5 installed successfully"
+}
+
 function setup_utils() {
    sudo apt-get update
-   sudo apt-get --yes install neovim tmux htop autojump ripgrep
+   sudo apt-get --yes install neovim tmux htop autojump ripgrep build-essential git m4 scons zlib1g zlib1g-dev libprotobuf-dev protobuf-compiler libprotoc-dev libgoogle-perftools-dev python-dev python
    # conda env, autojump, set default editor to nvim
    sudo sh -c 'echo "export PATH=\"/tip/miniforge3/bin:\$PATH\"" >> /root/.bashrc && \
    echo ". /usr/share/autojump/autojump.sh" >> /root/.bashrc && \
@@ -93,8 +102,8 @@ function setup_git_info() {
 [safe]
         directory = /tip/chipyard/generators/boom
 [user]
-        name = Muhan Song
-        email = songmuhan99@gmail.com
+        name = Xin lu
+        email = 2422182563@qq.com
 [credential]
         helper = cache
 EOF
@@ -113,10 +122,11 @@ function setup_pk(){
  
 
 setup_workdir
-setup_miniforge3
-setup_conda
-setup_chipyard
-test_all_env
+#setup_miniforge3
+#setup_conda
+#setup_chipyard
+#test_all_env
+setup_gem5
 setup_utils
 setup_git_info
 setup_pk
