@@ -127,7 +127,7 @@ setup_workdir
 #setup_conda
 #setup_chipyard
 #test_all_env
-setup_gem5
 setup_utils
+setup_gem5
 #setup_git_info
 #setup_pk
