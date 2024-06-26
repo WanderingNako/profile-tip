@@ -82,13 +82,13 @@ function setup_gem5() {
     # get gem5
     git clone $gem5_repo $work_dir/gem5
     # build gem5
-    # python3 `which scons` build/RISCV/gem5.opt -j || { echo "Gem5 installation failed"; exit 1; }
+    python3 `which scons` build/RISCV/gem5.opt -j100 --ignore-style || { echo "Gem5 installation failed"; exit 1; }
     echo "Gem5 installed successfully"
 }
 
 function setup_utils() {
    sudo apt-get update
-   sudo apt-get --yes install neovim tmux htop autojump ripgrep build-essential git m4 scons zlib1g zlib1g-dev libprotobuf-dev protobuf-compiler libprotoc-dev libgoogle-perftools-dev python-dev python
+   sudo apt-get --yes install neovim tmux htop autojump ripgrep build-essential git m4 scons zlib1g zlib1g-dev libprotobuf-dev protobuf-compiler libprotoc-dev libgoogle-perftools-dev python-dev python python3-pip
    # conda env, autojump, set default editor to nvim
    sudo sh -c 'echo "export PATH=\"/tip/miniforge3/bin:\$PATH\"" >> /root/.bashrc && \
    echo ". /usr/share/autojump/autojump.sh" >> /root/.bashrc && \
@@ -128,5 +128,5 @@ setup_workdir
 #test_all_env
 setup_gem5
 setup_utils
-setup_git_info
-setup_pk
+#setup_git_info
+#setup_pk
